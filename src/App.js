@@ -235,7 +235,9 @@ function App() {
         <Row rowNumb={4} setChoices={setChoices} allChoices={allChoices} />
         <Row rowNumb={5} setChoices={setChoices} allChoices={allChoices} />
       </div>
-      <NextBestWord allChoices={allChoices} filteredWords={filteredWords} />
+      <div style={{ marginRight: "40px" }}>
+        <NextBestWord allChoices={allChoices} filteredWords={filteredWords} />
+      </div>
     </div>
   )
 }

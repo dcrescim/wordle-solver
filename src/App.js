@@ -189,11 +189,10 @@ function Row({ rowNumb, setChoices, allChoices }) {
 }
 
 function App() {
-  let actualChoices = "abcdefghijklmnopqrstuvwxyz"
-
   let [allChoices, setChoices] = useState([])
   useEffect(() => {
     function handleKeyDown(e) {
+      let actualChoices = "abcdefghijklmnopqrstuvwxyz"
       let value = e.key.toLowerCase()
       if (!actualChoices.includes(value) && value !== "backspace") {
         return

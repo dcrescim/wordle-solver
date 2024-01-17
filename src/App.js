@@ -190,33 +190,54 @@ function Row({ rowNumb, setChoices, allChoices }) {
 
 function App() {
   let [allChoices, setChoices] = useState([])
+  let [addWord, setAddWord] = useState('')
   useEffect(() => {
-    function handleKeyDown(e) {
-      let actualChoices = "abcdefghijklmnopqrstuvwxyz"
-      let value = e.key.toLowerCase()
-      if (!actualChoices.includes(value) && value !== "backspace") {
-        return
-      }
-      if (value === "backspace") {
-        const newChoices = [...allChoices]
-        newChoices.pop()
-        setChoices(newChoices)
-        window.removeEventListener("keydown", handleKeyDown)
-        return
-      }
+    // function handleKeyDown(e) {
+    //   console.log("in handleKeyDown")
+    //   let actualChoices = "abcdefghijklmnopqrstuvwxyz"
+    //   let value = e.key.toLowerCase()
+    //   if (!actualChoices.includes(value) && value !== "backspace") {
+    //     return
+    //   }
+    //   if (value === "backspace") {
+    //     const newChoices = [...allChoices]
+    //     newChoices.pop()
+    //     setChoices(newChoices)
+    //     window.removeEventListener("keydown", handleKeyDown)
+    //     return
+    //   }
 
-      const newChoices = [...allChoices]
-      newChoices.push({ letter: value, background: 1 })
-      setChoices(newChoices)
-      window.removeEventListener("keydown", handleKeyDown)
-    }
+    //   const newChoices = [...allChoices]
+    //   newChoices.push({ letter: value, background: 1 })
+    //   setChoices(newChoices)
+    //   window.removeEventListener("keydown", handleKeyDown)
+    // }
 
-    window.addEventListener("keydown", handleKeyDown)
+    // window.addEventListener("keydown", handleKeyDown)
   }, [allChoices])
 
   let filteredWords = filterWords(possibleWords, allChoices)
 
   return (
+    <>
+    <div style={{display: 'flex', justifyContent: 'center'}}>
+    <input type="text" placeholder="Your Word" value={addWord} onChange={(e) => {
+          console.log("in onChange")
+          e.preventDefault()
+          e.stopPropagation()
+          setAddWord(e.target.value)}
+        }/>
+      <button onClick={() => {
+          const newChoices = [...allChoices]
+          for(let i = 0; i < addWord.length; i++){
+            let char = addWord[i]
+            newChoices.push({ letter: char, background: 1 })
+            
+          }
+          setChoices(newChoices)
+          setAddWord('')
+        }}> Add Word</button>
+    </div>
     <div
       className="App"
       style={{ display: "grid", gridTemplateColumns: "20% 60% 20%", justifyContent: "center", marginTop: "100px" }}
@@ -238,7 +259,9 @@ function App() {
       <div style={{ marginRight: "40px" }}>
         <NextBestWord allChoices={allChoices} filteredWords={filteredWords} />
       </div>
+
     </div>
+    </>
   )
 }
 
